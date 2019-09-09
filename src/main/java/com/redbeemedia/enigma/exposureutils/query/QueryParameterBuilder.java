@@ -2,6 +2,9 @@ package com.redbeemedia.enigma.exposureutils.query;
 
 import com.redbeemedia.enigma.core.util.IStringAppendable;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class QueryParameterBuilder {
     public static <T> IQueryParameter<T> create(IQueryParameterSet owner, Class<T> type, String name, T defaultValue) {
         return create(owner, type,name, defaultValue, true);
@@ -25,7 +28,7 @@ public class QueryParameterBuilder {
             @Override
             public IStringAppendable apply(IStringAppendable urlPath) {
                 if(hasBeenSet) {
-                    return urlPath.append(name).append("=").append(String.valueOf(value));
+                    return urlPath.append(name).append("=").append(urlEncode(value));
                 } else {
                     return urlPath;
                 }
@@ -33,5 +36,14 @@ public class QueryParameterBuilder {
         };
         owner.add(queryParameter);
         return queryParameter;
+    }
+
+    private static String urlEncode(Object value) {
+        String stringValue = String.valueOf(value);
+        try {
+            return URLEncoder.encode(stringValue, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
