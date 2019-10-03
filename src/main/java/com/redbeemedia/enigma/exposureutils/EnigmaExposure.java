@@ -5,7 +5,7 @@ import android.util.JsonReader;
 
 import com.redbeemedia.enigma.core.businessunit.IBusinessUnit;
 import com.redbeemedia.enigma.core.context.EnigmaRiverContext;
-import com.redbeemedia.enigma.core.error.Error;
+import com.redbeemedia.enigma.core.error.EnigmaError;
 import com.redbeemedia.enigma.core.error.JsonResponseError;
 import com.redbeemedia.enigma.core.error.UnexpectedError;
 import com.redbeemedia.enigma.core.http.IHttpCall;
@@ -68,7 +68,7 @@ public class EnigmaExposure {
         }
 
         @Override
-        protected void onError(Error error) {
+        protected void onError(EnigmaError error) {
             getExposureRequestCallback().onError(error);
         }
 

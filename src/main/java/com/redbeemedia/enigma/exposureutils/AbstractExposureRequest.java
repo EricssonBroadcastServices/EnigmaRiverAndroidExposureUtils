@@ -3,7 +3,7 @@ package com.redbeemedia.enigma.exposureutils;
 import android.util.JsonReader;
 
 import com.redbeemedia.enigma.core.businessunit.IBusinessUnit;
-import com.redbeemedia.enigma.core.error.Error;
+import com.redbeemedia.enigma.core.error.EnigmaError;
 import com.redbeemedia.enigma.core.http.AuthenticatedExposureApiCall;
 import com.redbeemedia.enigma.core.http.ExposureApiCall;
 import com.redbeemedia.enigma.core.http.IHttpCall;
@@ -31,15 +31,11 @@ import java.util.List;
 
     @Override
     public final void onSuccess(SuccessT obj) {
-//        try {
-            resultHandler.onSuccess(obj);
-//        } catch (Exception e) {
-//            onError(Error.UNEXPECTED_ERROR);
-//        }
+        resultHandler.onSuccess(obj);
     }
 
     @Override
-    public final void onError(Error error) {
+    public final void onError(EnigmaError error) {
         resultHandler.onError(error);
     }
 
