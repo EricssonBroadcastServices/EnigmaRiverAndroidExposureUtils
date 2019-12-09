@@ -12,6 +12,7 @@ import com.redbeemedia.enigma.exposureutils.models.track.ApiTrackSizes;
 import com.redbeemedia.enigma.exposureutils.models.localized.ApiLocalizedData;
 import com.redbeemedia.enigma.exposureutils.models.person.ApiPerson;
 import com.redbeemedia.enigma.exposureutils.models.media.ApiMedia;
+import com.redbeemedia.enigma.exposureutils.models.tv.ApiTvShowInfo;
 import com.redbeemedia.enigma.exposureutils.models.parental.ApiParentalRating;
 import com.redbeemedia.enigma.exposureutils.models.publication.ApiPublication;
 import com.redbeemedia.enigma.exposureutils.models.user.ApiUserAssetData;
@@ -24,6 +25,7 @@ public class ApiAsset implements Parcelable {
     private String expires;
     private ApiUserAssetData userData;
     private List<ApiLinkedEntity> linkedEntities;
+    private ApiTvShowInfo tvShow;
     private List<ApiLocalizedData> localized;
     private double rating;
     private String episode;
@@ -31,6 +33,7 @@ public class ApiAsset implements Parcelable {
     private String type;
     private List<String> productionCountries;
     private List<String> audioTracks;
+    private long duration;
     private String seasonId;
     private String assetId;
     private String defaultAudioTrack;
@@ -71,6 +74,9 @@ public class ApiAsset implements Parcelable {
                 case "linkedEntities":
                     this.linkedEntities = JsonReaderUtil.readArray(jsonReader, ApiLinkedEntity.class);
                     break;
+                case "tvShow":
+                    this.tvShow = new ApiTvShowInfo(jsonReader);
+                    break;
                 case "localized":
                     this.localized = JsonReaderUtil.readArray(jsonReader, ApiLocalizedData.class);
                     break;
@@ -91,6 +97,9 @@ public class ApiAsset implements Parcelable {
                     break;
                 case "audioTracks":
                     this.audioTracks = JsonReaderUtil.readArray(jsonReader, String.class);
+                    break;
+                case "duration":
+                    this.duration = jsonReader.nextLong();
                     break;
                 case "seasonId":
                     this.seasonId = jsonReader.nextString();
@@ -181,6 +190,10 @@ public class ApiAsset implements Parcelable {
         return this.linkedEntities;
     }
 
+    public ApiTvShowInfo getTvShow() {
+        return this.tvShow;
+    }
+
     public List<ApiLocalizedData> getLocalized() {
         return this.localized;
     }
@@ -207,6 +220,10 @@ public class ApiAsset implements Parcelable {
 
     public List<String> getAudioTracks() {
         return this.audioTracks;
+    }
+
+    public long getDuration() {
+        return this.duration;
     }
 
     public String getSeasonId() {
@@ -312,6 +329,7 @@ public class ApiAsset implements Parcelable {
             object.expires = in.readString();
             object.userData = in.readParcelable(ApiUserAssetData.class.getClassLoader());
             object.linkedEntities = in.createTypedArrayList(ApiLinkedEntity.CREATOR);
+            object.tvShow = in.readParcelable(ApiTvShowInfo.class.getClassLoader());
             object.localized = in.createTypedArrayList(ApiLocalizedData.CREATOR);
             object.rating = in.readDouble();
             object.episode = in.readString();
@@ -319,6 +337,7 @@ public class ApiAsset implements Parcelable {
             object.type = in.readString();
             object.productionCountries = in.createStringArrayList();
             object.audioTracks = in.createStringArrayList();
+            object.duration = in.readLong();
             object.seasonId = in.readString();
             object.assetId = in.readString();
             object.defaultAudioTrack = in.readString();
@@ -355,6 +374,7 @@ public class ApiAsset implements Parcelable {
         dest.writeString(expires);
         dest.writeParcelable(userData, flags);
         dest.writeTypedList(linkedEntities);
+        dest.writeParcelable(tvShow, flags);
         dest.writeTypedList(localized);
         dest.writeDouble(rating);
         dest.writeString(episode);
@@ -362,6 +382,7 @@ public class ApiAsset implements Parcelable {
         dest.writeString(type);
         dest.writeStringList(productionCountries);
         dest.writeStringList(audioTracks);
+        dest.writeLong(duration);
         dest.writeString(seasonId);
         dest.writeString(assetId);
         dest.writeString(defaultAudioTrack);
