@@ -1,11 +1,16 @@
 package com.redbeemedia.enigma.exposureutils;
 
+import com.redbeemedia.enigma.core.util.IStringAppendable;
+import com.redbeemedia.enigma.exposureutils.query.ISpecialQueryParameterType;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class StringArray implements Iterable<String> {
+public class StringArray implements Iterable<String>, ISpecialQueryParameterType {
     private final List<String> list;
 
     public StringArray(List<String> list) {
@@ -39,8 +44,25 @@ public class StringArray implements Iterable<String> {
     }
 
     @Override
-    public String toString() {
-        //TODO evaluate if this is the expected format for array[string] in swagger
-        return list.toString();
+    public IStringAppendable appendTo(String name, IStringAppendable urlPath) {
+        boolean first = true;
+        for(String value : this) {
+            if(first) {
+                first = false;
+            } else {
+                urlPath = urlPath.append("&");
+            }
+            urlPath = urlPath.append(name).append("=").append(urlEncode(value));
+        }
+        return urlPath;
+    }
+
+    private static String urlEncode(Object value) {
+        String stringValue = String.valueOf(value);
+        try {
+            return URLEncoder.encode(stringValue, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
