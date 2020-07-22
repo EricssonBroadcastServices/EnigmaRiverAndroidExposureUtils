@@ -2,8 +2,10 @@ package com.redbeemedia.enigma.exposureutils;
 
 import java.lang.Integer;
 import com.redbeemedia.enigma.core.businessunit.IBusinessUnit;
+import com.redbeemedia.enigma.core.session.ISession;
 import com.redbeemedia.enigma.exposureutils.query.QueryParameterBuilder;
 import com.redbeemedia.enigma.core.util.UrlPath;
+import com.redbeemedia.enigma.core.http.IHttpCall;
 import com.redbeemedia.enigma.exposureutils.models.asset.ApiAsset;
 import java.lang.String;
 import java.lang.Boolean;
@@ -135,5 +137,10 @@ public class GetAssetByIdRequest extends AbstractExposureRequest<ApiAsset> {
     @Override
     public UrlPath getUrl(IBusinessUnit businessUnit) {
         return qps.applyAll(businessUnit.getApiBaseUrl("v1").append("content/asset").append(this.assetId));
+    }
+
+    @Override
+    public IHttpCall getHttpCall(ISession session) {
+        return getHttpCall(session.getBusinessUnit());
     }
 }

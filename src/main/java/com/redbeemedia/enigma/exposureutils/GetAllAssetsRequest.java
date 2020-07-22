@@ -2,9 +2,11 @@ package com.redbeemedia.enigma.exposureutils;
 
 import java.lang.Integer;
 import com.redbeemedia.enigma.core.businessunit.IBusinessUnit;
+import com.redbeemedia.enigma.core.session.ISession;
 import com.redbeemedia.enigma.exposureutils.query.QueryParameterBuilder;
 import com.redbeemedia.enigma.core.util.UrlPath;
 import com.redbeemedia.enigma.exposureutils.models.asset.ApiAssetList;
+import com.redbeemedia.enigma.core.http.IHttpCall;
 import java.lang.String;
 import java.lang.Boolean;
 import com.redbeemedia.enigma.exposureutils.query.IQueryParameter;
@@ -133,5 +135,10 @@ public class GetAllAssetsRequest extends AbstractExposureRequest<ApiAssetList> {
     @Override
     public UrlPath getUrl(IBusinessUnit businessUnit) {
         return qps.applyAll(businessUnit.getApiBaseUrl("v1").append("content/asset"));
+    }
+
+    @Override
+    public IHttpCall getHttpCall(ISession session) {
+        return getHttpCall(session.getBusinessUnit());
     }
 }

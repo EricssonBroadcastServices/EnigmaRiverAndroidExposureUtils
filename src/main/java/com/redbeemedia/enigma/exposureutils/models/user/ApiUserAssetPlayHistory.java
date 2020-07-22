@@ -7,7 +7,6 @@ import java.io.IOException;
 
 
 public class ApiUserAssetPlayHistory implements Parcelable {
-    private long lastViewedTime;
     private String errorMessage;
     private String channelId;
     private long lastViewedOffset;
@@ -20,9 +19,6 @@ public class ApiUserAssetPlayHistory implements Parcelable {
         jsonReader.beginObject();
         while (jsonReader.hasNext()) {
             switch (jsonReader.nextName()) {
-                case "lastViewedTime":
-                    this.lastViewedTime = jsonReader.nextLong();
-                    break;
                 case "errorMessage":
                     this.errorMessage = jsonReader.nextString();
                     break;
@@ -42,10 +38,6 @@ public class ApiUserAssetPlayHistory implements Parcelable {
         jsonReader.endObject();
     }
 
-
-    public long getLastViewedTime() {
-        return this.lastViewedTime;
-    }
 
     public String getErrorMessage() {
         return this.errorMessage;
@@ -71,7 +63,6 @@ public class ApiUserAssetPlayHistory implements Parcelable {
     public static final Parcelable.Creator<ApiUserAssetPlayHistory> CREATOR = new Parcelable.Creator<ApiUserAssetPlayHistory>() {
         public ApiUserAssetPlayHistory createFromParcel(Parcel in) {
             ApiUserAssetPlayHistory object = new ApiUserAssetPlayHistory();
-            object.lastViewedTime = in.readLong();
             object.errorMessage = in.readString();
             object.channelId = in.readString();
             object.lastViewedOffset = in.readLong();
@@ -86,7 +77,6 @@ public class ApiUserAssetPlayHistory implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(lastViewedTime);
         dest.writeString(errorMessage);
         dest.writeString(channelId);
         dest.writeLong(lastViewedOffset);

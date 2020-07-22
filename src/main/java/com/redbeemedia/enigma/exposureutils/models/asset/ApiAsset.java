@@ -22,6 +22,7 @@ import com.redbeemedia.enigma.core.util.JsonReaderUtil;
 
 
 public class ApiAsset implements Parcelable {
+    private String studio;
     private String expires;
     private ApiUserAssetData userData;
     private List<ApiLinkedEntity> linkedEntities;
@@ -57,7 +58,6 @@ public class ApiAsset implements Parcelable {
     private List<Marker> markers;
     private String changed;
     private List<ApiPublication> publications;
-    private boolean downloadBlocked;
 
 
     protected ApiAsset() {}//Protected constructor for Parcelable.Creator and Mocks
@@ -66,6 +66,9 @@ public class ApiAsset implements Parcelable {
         jsonReader.beginObject();
         while (jsonReader.hasNext()) {
             switch (jsonReader.nextName()) {
+                case "studio":
+                    this.studio = jsonReader.nextString();
+                    break;
                 case "expires":
                     this.expires = jsonReader.nextString();
                     break;
@@ -171,9 +174,6 @@ public class ApiAsset implements Parcelable {
                 case "publications":
                     this.publications = JsonReaderUtil.readArray(jsonReader, ApiPublication.class);
                     break;
-                case "downloadBlocked":
-                    this.downloadBlocked = jsonReader.nextBoolean();
-                    break;
                 default:
                     jsonReader.skipValue();
             }
@@ -181,6 +181,10 @@ public class ApiAsset implements Parcelable {
         jsonReader.endObject();
     }
 
+
+    public String getStudio() {
+        return this.studio;
+    }
 
     public String getExpires() {
         return this.expires;
@@ -322,10 +326,6 @@ public class ApiAsset implements Parcelable {
         return this.publications;
     }
 
-    public boolean getDownloadBlocked() {
-        return downloadBlocked;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -334,6 +334,7 @@ public class ApiAsset implements Parcelable {
     public static final Parcelable.Creator<ApiAsset> CREATOR = new Parcelable.Creator<ApiAsset>() {
         public ApiAsset createFromParcel(Parcel in) {
             ApiAsset object = new ApiAsset();
+            object.studio = in.readString();
             object.expires = in.readString();
             object.userData = in.readParcelable(ApiUserAssetData.class.getClassLoader());
             object.linkedEntities = in.createTypedArrayList(ApiLinkedEntity.CREATOR);
@@ -369,7 +370,6 @@ public class ApiAsset implements Parcelable {
             object.markers = in.createTypedArrayList(Marker.CREATOR);
             object.changed = in.readString();
             object.publications = in.createTypedArrayList(ApiPublication.CREATOR);
-            object.downloadBlocked = (in.readInt() != 0);
             return object;
         }
 
@@ -380,6 +380,7 @@ public class ApiAsset implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(studio);
         dest.writeString(expires);
         dest.writeParcelable(userData, flags);
         dest.writeTypedList(linkedEntities);
@@ -415,6 +416,5 @@ public class ApiAsset implements Parcelable {
         dest.writeTypedList(markers);
         dest.writeString(changed);
         dest.writeTypedList(publications);
-        dest.writeInt(downloadBlocked ? 1 : 0);
     }
 }

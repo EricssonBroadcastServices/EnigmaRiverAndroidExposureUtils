@@ -17,6 +17,7 @@ public class ApiPublication implements Parcelable {
     private String toDate;
     private List<String> countries;
     private List<String> services;
+    private List<String> availabilityKeys;
     private String publicationId;
     private String publicationDate;
     private List<String> products;
@@ -45,6 +46,9 @@ public class ApiPublication implements Parcelable {
                     break;
                 case "services":
                     this.services = JsonReaderUtil.readArray(jsonReader, String.class);
+                    break;
+                case "availabilityKeys":
+                    this.availabilityKeys = JsonReaderUtil.readArray(jsonReader, String.class);
                     break;
                 case "publicationId":
                     this.publicationId = jsonReader.nextString();
@@ -87,6 +91,10 @@ public class ApiPublication implements Parcelable {
         return this.services;
     }
 
+    public List<String> getAvailabilityKeys() {
+        return this.availabilityKeys;
+    }
+
     public String getPublicationId() {
         return this.publicationId;
     }
@@ -113,6 +121,7 @@ public class ApiPublication implements Parcelable {
             object.toDate = in.readString();
             object.countries = in.createStringArrayList();
             object.services = in.createStringArrayList();
+            object.availabilityKeys = in.createStringArrayList();
             object.publicationId = in.readString();
             object.publicationDate = in.readString();
             object.products = in.createStringArrayList();
@@ -132,6 +141,7 @@ public class ApiPublication implements Parcelable {
         dest.writeString(toDate);
         dest.writeStringList(countries);
         dest.writeStringList(services);
+        dest.writeStringList(availabilityKeys);
         dest.writeString(publicationId);
         dest.writeString(publicationDate);
         dest.writeStringList(products);
