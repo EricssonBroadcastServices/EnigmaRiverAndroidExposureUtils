@@ -31,7 +31,7 @@ public class EnigmaExposureTest {
         final List<String> receivedResults = new ArrayList<>();
         Flag onSuccessCalled = new Flag();
         Flag onErrorCalled = new Flag();
-        enigmaExposure.doRequest(new AbstractExposureRequest<List<String>>("POSTISH", AbstractExposureRequest.parseListMethod(String.class), new IExposureResultHandler<List<String>>() {
+        enigmaExposure.doRequest(new AbstractExposureRequest<List<String>>("POSTISH", AbstractExposureRequest.parseListMethod(String.class), new BaseExposureResultHandler<List<String>>() {
             @Override
             public void onSuccess(List<String> result) {
                 onSuccessCalled.setFlag();
@@ -72,7 +72,7 @@ public class EnigmaExposureTest {
         final List<String> receivedResults = new ArrayList<>();
         Flag onSuccessCalled = new Flag();
         Flag onErrorCalled = new Flag();
-        enigmaExposure.doRequest(new AbstractExposureRequest<List<String>>("POSTISH", AbstractExposureRequest.parseListMethod(String.class), new IExposureResultHandler<List<String>>() {
+        enigmaExposure.doRequest(new AbstractExposureRequest<List<String>>("POSTISH", AbstractExposureRequest.parseListMethod(String.class), new BaseExposureResultHandler<List<String>>() {
             @Override
             public void onSuccess(List<String> result) {
                 onSuccessCalled.setFlag();
@@ -99,7 +99,7 @@ public class EnigmaExposureTest {
 
         Flag onSuccessCalled2 = new Flag();
         Flag onErrorCalled2 = new Flag();
-        enigmaExposure.doRequest(new AbstractExposureRequest<List<String>>("POSTISH", AbstractExposureRequest.parseListMethod(String.class), new IExposureResultHandler<List<String>>() {
+        enigmaExposure.doRequest(new AbstractExposureRequest<List<String>>("POSTISH", AbstractExposureRequest.parseListMethod(String.class), new BaseExposureResultHandler<List<String>>() {
             @Override
             public void onSuccess(List<String> result) {
                 onSuccessCalled2.setFlag();
