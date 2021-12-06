@@ -128,7 +128,7 @@ public class EnigmaExposureTest {
     private static class MockSession extends Session {
 
         public MockSession() {
-            super("Mock", "mockCu","mockBu");
+            super("Mock", "mockCu","mockBu","123");
         }
     }
 }
