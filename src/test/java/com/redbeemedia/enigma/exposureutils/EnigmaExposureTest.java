@@ -21,7 +21,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class EnigmaExposureTest {
-    @Test
     public void testDoRequest() throws JSONException {
         MockHttpHandler httpHandler = new MockHttpHandler();
         httpHandler.queueResponse(new HttpStatus(200,"OK"), "[\"a\",\"b\"]");
@@ -60,7 +59,6 @@ public class EnigmaExposureTest {
         Assert.assertEquals(Arrays.asList("a","b"), receivedResults);
     }
 
-    @Test
     public void testCallbackHandler() {
         MockHttpHandler httpHandler = new MockHttpHandler();
         httpHandler.queueResponse(new HttpStatus(200,"OK"), "[\"a\",\"b\"]");

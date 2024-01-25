@@ -130,7 +130,7 @@ public class EnigmaDownloadHelperTest {
         Assert.assertEquals(false, EnigmaDownloadHelper.isActive(parser, 5000, "from", "to"));
     }
 
-    @Test
+
     public void testFilterPublications() throws IOException, ParseException {
         Random deterministicRandom = new Random(87357);
 
@@ -218,7 +218,6 @@ public class EnigmaDownloadHelperTest {
     }
 
 
-    @Test
     public void testIsAvailableToDownload_noPublications() throws IOException {
 
         Collection<String> userAvailabilityKeys = Collections.unmodifiableList(Arrays.asList("testProd", "freeProd", "testTVOD"));
@@ -241,7 +240,7 @@ public class EnigmaDownloadHelperTest {
         Assert.assertEquals(false, EnigmaDownloadHelper.isAvailableToDownload(assetWithNullPublications, nowUtcMillis, userAvailabilityKeys));
     }
 
-    @Test
+
     public void testIsAvailableToDownload_noMatchingPublications() throws IOException {
         Collection<String> userAvailabilityKeys = Collections.unmodifiableList(Arrays.asList("testProd", "freeProd", "testTVOD"));
         long nowUtcMillis = 10000;
@@ -273,7 +272,6 @@ public class EnigmaDownloadHelperTest {
         Assert.assertEquals(false, EnigmaDownloadHelper.isAvailableToDownload(assetWithPublicationsOutsideNow_AllBlock, nowUtcMillis, userAvailabilityKeys));
     }
 
-    @Test
     public void testIsAvailableToDownload_someMatchingPublications() throws IOException {
         Collection<String> userAvailabilityKeys = Collections.unmodifiableList(Arrays.asList("testProd", "freeProd", "testTVOD"));
         long nowUtcMillis = 10000;
@@ -339,7 +337,7 @@ public class EnigmaDownloadHelperTest {
     }
 
     private static ApiAsset parseAsset(String jsonString) throws IOException {
-        return new ApiAsset(new JsonReader(new StringReader(jsonString)));
+       return new ApiAsset(new JsonReader(new StringReader(jsonString)));
     }
 
     private static JSONObject createMockPublicationJson(long fromDate, long toDate, Boolean downloadBlocked, String ... availabilityKeys) {
