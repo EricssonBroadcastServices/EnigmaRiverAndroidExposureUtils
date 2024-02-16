@@ -1,3 +1,3 @@
 # Exposure Util
 
-The exposure util library, version r3.7.6-BETA-4, for easy integration with the Red Bee exposure backend.
+The exposure util library, version r3.7.7, for easy integration with the Red Bee exposure backend.
